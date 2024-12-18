@@ -3,14 +3,12 @@ const mongoose = require("mongoose")
 exports.creates = async (req, res) => {
     try {
         const { fname, lname, email } = req.body
-
         // Validate email presence
         if (!email) {
             return res.status(422).json({
                 message: "Email is mandatory."
             })
         }
-
         // Check if the email already exists
         const existEmail = await CRUDForm.findOne({ email })
         if (existEmail) {
@@ -18,10 +16,8 @@ exports.creates = async (req, res) => {
                 message: "Email already exists."
             })
         }
-
         // Create a new user
         const created = await CRUDForm.create({ fname, lname, email })
-
         // Respond with success
         return res.status(201).json({
             message: "User created successfully.",
@@ -40,14 +36,12 @@ exports.read = async (req, res) => {
     try {
         // Fetch all users
         const users = await CRUDForm.find()
-
         // Check if users exist
         if (users.length === 0) {
             return res.status(404).json({
                 message: "No users found."
             })
         }
-
         // Respond with users
         return res.status(200).json({
             message: "Users retrieved successfully.",
@@ -73,7 +67,6 @@ exports.Update = async (req, res) => {
                 message: "Invalid user ID provided."
             })
         }
-
         // Validate email
         if (!email) {
             return res.status(422).json({
